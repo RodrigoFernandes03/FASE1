@@ -1,0 +1,36 @@
+/**
+ * @file main.c
+ * @brief Programa principal para demonstração do sistema
+ * @author [Seu Nome]
+ * @version 1.0
+ * @date 2025-03-30
+ */
+
+#include "antenas.h"
+#include <stdio.h>
+
+/**
+ * @brief Função principal
+ * @return 0 em caso de sucesso
+ * 
+ * @details
+ * 1. Carrega antenas do arquivo "antenas.txt"
+ * 2. Calcula efeitos nefastos
+ * 3. Exibe resultados
+ * 4. Libera memória
+ */
+int main() {
+    Antena* lista_antenas = NULL;
+    EfeitoNefasto* lista_efeitos = NULL;
+
+    carregar_antenas_de_arquivo(&lista_antenas, "antenas.txt");
+    calcular_efeitos_nefastos(lista_antenas, &lista_efeitos);
+
+    imprimir_antenas(lista_antenas);
+    imprimir_efeitos_nefastos(lista_efeitos);
+
+    liberar_antenas(lista_antenas);
+    liberar_efeitos_nefastos(lista_efeitos);
+
+    return 0;
+}
