@@ -1,0 +1,121 @@
+/**
+ * @file antenas.h
+ * @brief Definições para o sistema de antenas e efeitos nefastos
+ * @author [Seu Nome]
+ * @version 1.0
+ * @date 2025-03-30
+ */
+
+#ifndef ANTENAS_H
+#define ANTENAS_H
+
+#include <stdbool.h>
+
+/**
+ * @struct Coordenada
+ * @brief Armazena coordenadas 2D (x, y) no plano cartesiano
+ */
+typedef struct {
+    int x; /**< Coordenada horizontal */
+    int y; /**< Coordenada vertical */
+} Coordenada;
+
+/**
+ * @struct Antena
+ * @brief Representa uma antena na lista ligada
+ */
+typedef struct Antena {
+    char frequencia;        /**< Frequência da antena (caractere único) */
+    Coordenada posicao;     /**< Posição (x,y) da antena */
+    struct Antena* proxima; /**< Ponteiro para a próxima antena na lista */
+} Antena;
+
+/**
+ * @struct EfeitoNefasto
+ * @brief Representa uma localização com efeito nefasto
+ */
+typedef struct EfeitoNefasto {
+    Coordenada posicao;           /**< Posição (x,y) afetada */
+    struct EfeitoNefasto* proxima; /**< Ponteiro para o próximo efeito na lista */
+} EfeitoNefasto;
+
+// ---------- FUNÇÕES PARA ANTENAS ----------
+
+/**
+ * @brief Cria uma nova antena alocada dinamicamente
+ * @param freq Frequência da antena (ex: 'A', 'B')
+ * @param x Coordenada horizontal
+ * @param y Coordenada vertical
+ * @return Ponteiro para a antena criada ou NULL em caso de falha
+ */
+Antena* criar_antena(char freq, int x, int y);
+
+/**
+ * @brief Insere uma antena no final da lista ligada
+ * @param lista Ponteiro para o ponteiro da cabeça da lista
+ * @param freq Frequência da antena
+ * @param x Coordenada horizontal
+ * @param y Coordenada vertical
+ */
+void inserir_antena(Antena** lista, char freq, int x, int y);
+
+/**
+ * @brief Remove uma antena da lista com base nas coordenadas
+ * @param lista Ponteiro para o ponteiro da cabeça da lista
+ * @param x Coordenada horizontal da antena a remover
+ * @param y Coordenada vertical da antena a remover
+ * @return true se a antena foi removida, false caso contrário
+ */
+bool remover_antena(Antena** lista, int x, int y);
+
+/**
+ * @brief Libera toda a memória alocada para a lista de antenas
+ * @param lista Ponteiro para a cabeça da lista
+ */
+void liberar_antenas(Antena* lista);
+
+/**
+ * @brief Imprime a lista de antenas em formato tabular
+ * @param lista Ponteiro para a cabeça da lista
+ */
+void imprimir_antenas(Antena* lista);
+
+// ---------- FUNÇÕES PARA EFEITOS NEFASTOS ----------
+
+/**
+ * @brief Cria um novo registro de efeito nefasto
+ * @param x Coordenada horizontal
+ * @param y Coordenada vertical
+ * @return Ponteiro para o efeito criado ou NULL em caso de falha
+ */
+EfeitoNefasto* criar_efeito_nefasto(int x, int y);
+
+/**
+ * @brief Calcula automaticamente os efeitos nefastos baseados nas antenas
+ * @param lista_antenas Ponteiro para a lista de antenas
+ * @param lista_efeitos Ponteiro para o ponteiro da lista de efeitos
+ */
+void calcular_efeitos_nefastos(Antena* lista_antenas, EfeitoNefasto** lista_efeitos);
+
+/**
+ * @brief Libera toda a memória alocada para a lista de efeitos
+ * @param lista Ponteiro para a cabeça da lista
+ */
+void liberar_efeitos_nefastos(EfeitoNefasto* lista);
+
+/**
+ * @brief Imprime a lista de efeitos nefastos em formato tabular
+ * @param lista Ponteiro para a cabeça da lista
+ */
+void imprimir_efeitos_nefastos(EfeitoNefasto* lista);
+
+// ---------- MANIPULAÇÃO DE ARQUIVOS ----------
+
+/**
+ * @brief Carrega antenas a partir de um arquivo de texto
+ * @param lista Ponteiro para o ponteiro da cabeça da lista
+ * @param nome_arquivo Nome do arquivo a ser lido
+ */
+void carregar_antenas_de_arquivo(Antena** lista, const char* nome_arquivo);
+
+#endif // ANTENAS_H
